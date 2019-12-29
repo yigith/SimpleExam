@@ -1,0 +1,65 @@
+﻿@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Take an Exam</h1>
+    <p>Choose an exam and start answering the questions.</p>
+</div>
+
+<h2>My Exams</h2>
+
+@if (Model.UserExamViewModels.Count == 0)
+{
+    <p>Currently you don't have any exams!</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Exam Id</th>
+                <th>Exam Name</th>
+                <th>Exam Time</th>
+                <th>Duration</th>
+                <th>Number of Questions</th>
+                <th>Status</th>
+                <th>Your Score</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserExamViewModels)
+            {
+                <tr>
+                    <td>@item.ExamId</td>
+                    <td>@item.ExamName</td>
+                    <td>@(item.ExamTime == null ? "Anytime" : item.ExamTime.Value.ToString("dd.MM.yyyy HH:mm")) </td>
+                    <td>@item.ExamDuration</td>
+                    <td>@item.NumberOfQuestions</td>
+                    <td>@item.Status.GetDisplayName()</td>
+                    <td>@item.CorrectAnswers / @item.NumberOfQuestions</td>
+                    <td>
+                        @switch (item.Status)
+                        {
+                            case UserExamStatus.NotEntered:
+                                <button class="btn btn-primary" is-disabled="!item.IsExamTime">Start</button>
+                                break;
+                            case UserExamStatus.Uncompleted:
+                                <button class="btn btn-primary">Continue</button>
+                                break;
+                            case UserExamStatus.Completed:
+                                <button class="btn btn-primary">View Result</button>
+                                break;
+                            default:
+                                break;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
