@@ -10,7 +10,7 @@ namespace SimpleExam.Enums
     {
         [Display(Name = "Not Entered")]
         NotEntered = 0,
-        Uncompleted = 1,
+        InTheExam = 1,
         Completed = 2
     }
 }

@@ -40,6 +40,7 @@ namespace SimpleExam.Controllers
                     NumberOfQuestions = x.Exam.Questions.Count,
                     CorrectAnswers = x.Answers.Count(answer => answer.Option.IsCorrect),
                     Status = x.Status,
+                    // todo make it a method on the class UserExam
                     IsExamTime = x.Exam.StartTime == null 
                     || (x.Exam.StartTime < DateTime.Now && x.Exam.Duration == 0) 
                     || (x.Exam.StartTime < DateTime.Now && DateTime.Now < x.Exam.StartTime.Value.AddMinutes(x.Exam.Duration))
