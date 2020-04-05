@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleExam.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleExam.Models;
 
 namespace SimpleExam
 {
@@ -38,7 +39,7 @@ namespace SimpleExam
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<AppUser>()
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

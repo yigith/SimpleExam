@@ -17,8 +17,8 @@ namespace SimpleExam.Controllers
     public class HomeController : Controller
     {
         ApplicationDbContext _context;
-        UserManager<IdentityUser> _userManager;
-        public HomeController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        UserManager<AppUser> _userManager;
+        public HomeController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -27,30 +27,7 @@ namespace SimpleExam.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            var userId = User.GetLoggedInUserId<string>();
-            var userExamViewModels = _context.UserExams
-                .Include(x => x.Exam)
-                .Where(x => x.Exam.IsActive)
-                .Select(x => new UserExamViewModel
-                {
-                    ExamId = x.ExamId,
-                    ExamName = x.Exam.Name,
-                    ExamTime = x.Exam.StartTime,
-                    ExamDuration = x.Exam.Duration,
-                    NumberOfQuestions = x.Exam.Questions.Count,
-                    CorrectAnswers = x.Answers.Count(answer => answer.Option.IsCorrect),
-                    Status = x.Status,
-                    // todo make it a method on the class UserExam
-                    IsExamTime = x.Exam.StartTime == null 
-                    || (x.Exam.StartTime < DateTime.Now && x.Exam.Duration == 0) 
-                    || (x.Exam.StartTime < DateTime.Now && DateTime.Now < x.Exam.StartTime.Value.AddMinutes(x.Exam.Duration))
-                })
-                .ToList();
-            var vm = new HomeIndexViewModel
-            {
-                UserExamViewModels = userExamViewModels
-            };
-            return View(vm);
+            return View();
         }
 
         public IActionResult Privacy()

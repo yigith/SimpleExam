@@ -25,7 +25,7 @@ namespace SimpleExam.Models
         public UserExamStatus Status { get; set; }
 
 
-        public IdentityUser User { get; set; }
+        public AppUser User { get; set; }
         public Exam Exam { get; set; }
         public List<Answer> Answers { get; set; }
     }

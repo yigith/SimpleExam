@@ -10,21 +10,21 @@ namespace SimpleExam.Data
     public class DataSeed
     {
         // https://github.com/dotnet-architecture/eShopOnWeb/blob/f3f74a342e9ff10d4c0e7f76f411c29479da4fc2/src/Infrastructure/Identity/AppIdentityDbContextSeed.cs
-        public static async Task SeedUsersAndRolesAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task SeedUsersAndRolesAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             await roleManager.CreateAsync(new IdentityRole("admin"));
 
-            var defaultUser = new IdentityUser { UserName = "student@gmail.com", Email = "student@gmail.com" };
+            var defaultUser = new AppUser { UserName = "student@gmail.com", Email = "student@gmail.com" };
             await userManager.CreateAsync(defaultUser, "Password1.");
 
             string adminUserName = "yigith1@gmail.com";
-            var adminUser = new IdentityUser { UserName = adminUserName, Email = adminUserName };
+            var adminUser = new AppUser { UserName = adminUserName, Email = adminUserName };
             await userManager.CreateAsync(adminUser, "Password1.");
             adminUser = await userManager.FindByNameAsync(adminUserName);
             await userManager.AddToRoleAsync(adminUser, "admin");
         }
 
-        public static async Task SeedSampleExamAsync(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public static async Task SeedSampleExamAsync(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             var user = await userManager.FindByNameAsync("student@gmail.com");
 
