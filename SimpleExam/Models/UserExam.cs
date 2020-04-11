@@ -18,9 +18,9 @@ namespace SimpleExam.Models
         [ForeignKey("Exam")]
         public int ExamId { get; set; }
 
-        public DateTime? StartTime { get; set; }
+        public DateTime? StartTimeUTC { get; set; }
 
-        public DateTime? EndTime { get; set; }
+        public DateTime? EndTimeUTC { get; set; }
 
         public UserExamStatus Status { get; set; }
 

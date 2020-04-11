@@ -24,15 +24,22 @@ namespace SimpleExam.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ExamAssignment>()
-                .HasIndex(x => new { x.ExamId, x.StudentGroupId })
+                .HasIndex(x => new { x.ExamId, x.GroupId })
                 .IsUnique();
+
+            builder.Entity<StudentGroup>()
+                .HasKey(x => new { x.AppUserId, x.GroupId });
         }
 
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<StudentGroup> StudentGroups { get; set; }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<UserExam> UserExams { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<ExamAssignment> ExamAssignments { get; set; }
+        public DbSet<ExamAssignmentSetting> ExamAssignmentSettings { get; set; }
     }
 }

@@ -11,11 +11,11 @@ namespace SimpleExam.Models
 
         public int ExamId { get; set; }
 
-        public string StudentGroupId { get; set; }
+        public int GroupId { get; set; }
 
 
         public Exam Exam { get; set; }
-        public StudentGroup StudentGroup { get; set; }
+        public Group Group { get; set; }
         public ExamAssignmentSetting ExamAssignmentSetting { get; set; }
     }
 }

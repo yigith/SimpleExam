@@ -28,8 +28,8 @@ namespace SimpleExam.Models
         // if not null, the exam can not be taken until the ActiveTime
         public DateTime? ActiveStartTime { get; set; }
 
-        // if true, exam can not be taken
-        public bool IsSuspended { get; set; }
+        // if true, the exam can not be taken
+        public bool IsDisabled { get; set; }
 
         // if true, the user can retake the exam
         // retaking won't delete previous scores and answers. 

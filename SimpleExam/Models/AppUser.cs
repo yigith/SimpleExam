@@ -9,6 +9,6 @@ namespace SimpleExam.Models
     public class AppUser : IdentityUser
     {
 
-        public List<StudentGroup> Groups { get; set; }
+        public List<StudentGroup> StudentGroups { get; set; }
     }
 }

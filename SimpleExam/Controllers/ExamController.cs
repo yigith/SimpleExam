@@ -33,52 +33,6 @@ namespace SimpleExam.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Start(int examId)
         {
-            var now = DateTime.Now;
-
-            var userId = User.GetLoggedInUserId<string>();
-            var userExam = _context.UserExams
-                .Include(x => x.Exam)
-                .FirstOrDefault(x => x.ExamId == examId && x.UserId == userId);
-
-            var exam = userExam.Exam;
-
-            if (userExam == null)
-            {
-                return NotFound();
-            }
-
-            // Exam already started?
-            if (userExam.Status != UserExamStatus.NotEntered)
-            {
-                return RedirectToAction("Index");
-            }
-
-            // Is Exam NOT startable?
-            if (!exam.IsActive 
-                || exam.ActiveTime.HasValue && now < exam.ActiveTime 
-                || exam.StartTime.HasValue && now < exam.StartTime
-                || exam.StartTime.HasValue && !exam.IsStartTimeFlexible && exam.Duration > 0 && now > exam.StartTime.Value.AddMinutes(exam.Duration)
-                )
-            {
-                return RedirectToAction("Index");
-            }
-
-            // Start The Exam
-            userExam.Status = UserExamStatus.InTheExam;
-            userExam.StartTime = now;
-            if (exam.Duration == 0)
-            {
-                userExam.EndTime = null;
-            }
-            else if(exam.IsStartTimeFlexible || exam.ExtraTimeAllowed)
-            {
-                userExam.EndTime = now.AddMinutes(exam.Duration);
-            }
-            else
-            {
-                userExam.EndTime = exam.StartTime.Value.AddMinutes(exam.Duration);
-            }
-
             return View();
         }
 

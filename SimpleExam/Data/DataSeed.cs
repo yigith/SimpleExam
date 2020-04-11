@@ -13,9 +13,8 @@ namespace SimpleExam.Data
         public static async Task SeedUsersAndRolesAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             await roleManager.CreateAsync(new IdentityRole("admin"));
-
-            var defaultUser = new AppUser { UserName = "student@gmail.com", Email = "student@gmail.com" };
-            await userManager.CreateAsync(defaultUser, "Password1.");
+            var sampleUser = new AppUser { UserName = "student@gmail.com", Email = "student@gmail.com" };
+            await userManager.CreateAsync(sampleUser, "Password1.");
 
             string adminUserName = "yigith1@gmail.com";
             var adminUser = new AppUser { UserName = adminUserName, Email = adminUserName };
@@ -34,7 +33,6 @@ namespace SimpleExam.Data
             var exam = new Exam
             {
                 Name = "Sample Exam",
-                IsActive = true,
                 Questions = new List<Question>
                 {
                     new Question
@@ -59,17 +57,30 @@ namespace SimpleExam.Data
                             new Option { SortOrder = 4, Text = "West" },
                         }
                     }
-                },
-                UserExams = new List<UserExam> 
-                {
-                    new UserExam
-                    {
-                        User = user
-                    }
                 }
             };
 
             context.Add(exam);
+            context.SaveChanges();
+
+            var sampleStudentGroup = new Group
+            {
+                GroupName = "Student Group 1 ",
+                StudentGroups = new List<StudentGroup> { new StudentGroup { AppUserId = user.Id } },
+                ExamAssignments = new List<ExamAssignment>
+                {
+                    new ExamAssignment
+                    {
+                        ExamId = exam.Id,
+                        ExamAssignmentSetting = new ExamAssignmentSetting
+                        {
+                             Duration = 5,
+                             IsRetakeable = true
+                        }
+                    }
+                }
+            };
+            context.Groups.Add(sampleStudentGroup);
             context.SaveChanges();
         }
     }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SimpleExam.Data;
+using SimpleExam.Models;
 
 namespace SimpleExam
 {
@@ -30,7 +31,7 @@ namespace SimpleExam
                     var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
                     applicationDbContext.Database.Migrate();
 
-                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await DataSeed.SeedUsersAndRolesAsync(userManager, roleManager);
                     await DataSeed.SeedSampleExamAsync(applicationDbContext, userManager);
